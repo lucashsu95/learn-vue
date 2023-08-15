@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>New-Vue</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.js'
+        integrity='sha512-w39cIBZHEf0ac8RERRGs+aTrQbBIpb+0qGsMCKfwvJSmN6YV8brsbYN1a/nTmuQgfrGyg7p3WI4HRu1rs3rLvw=='
+        crossorigin='anonymous'></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.css'
+        integrity='sha512-lp6wLpq/o3UVdgb9txVgXUTsvs0Fj1YfelAbza2Kl/aQHbNnfTYPMLiQRvy3i+3IigMby34mtcvcrh31U50nRw=='
+        crossorigin='anonymous' />
+</head>
+
+<body>
+    <div id='app' class="container mt-5">
+        <h1>TodoList</h1>
+        <hr>
+        <p class="d-flex gap-3 ">
+            <input v-model="inp" type="text" class="form-control" placeholder="請輸入待辦事項">
+            <button class="btn btn-primary" @click="addItem">Add</button>
+        </p>
+        <hr>
+        <ul class="list-group">
+            <todo-item v-for="d in data" :key="d.id" :data="d" @edit="editItem" @del="delItem"></todo-item>
+        </ul>
+    </div>
+    <script src="main.js">
+
+    </script>
+</body>
+
+</html>
