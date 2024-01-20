@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import TheProduct from './components/TheProduct.vue';
 import TheHeader from './components/TheHeader.vue';
 
+// product
 const products = ref([
   {
     price: 200,
@@ -15,6 +16,8 @@ const products = ref([
     amount: 0,
   },
 ])
+
+// Search 
 const searchText = ref('')
 const product_total = computed(() => products.value.reduce((sum, x) => {
   return sum + x.price * x.amount;

@@ -1,35 +1,13 @@
-# props-emit
+# vue-cli 的 props 和 emit 使用方法
 
-This template should help get you started developing with Vue 3 in Vite.
+有購物車功能和搜尋功能
 
-## Recommended IDE Setup
+## component
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- TheHeader.vue 標頭 有搜尋功能
+- TheProduct.vue 商品 可以做新增和減少 可以算出total
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+相關連結
+[App.vue](./src/App.vue)
+[TheHeader.vue](./src/components/TheHeader.vue)
+[TheProduct.vue](./src/components/TheProduct.vue)
