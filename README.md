@@ -1,5 +1,5 @@
 # learn-vue
 
-[props-emit](./props-emitDist/index.html)
+[props-emit](./props-emit/Ldist/index.html)
 
-[todolist-cli](./todolist-cliDist/index.html)
+[todolist-cli](./todolist-cli/Ldist/index.html)
