@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>example_vue</title>
+    <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        {{datas.childNodes}}
+        <media :title="datas.name" :child="datas.childNodes"></media>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    datas: {
+                        name: "第一層",
+                        childNodes: [{
+                            name: '第二層1',
+                            url: null,
+                            childNodes: [{
+                                name: '第三層1',
+                                url: '到底了'
+                            }]
+                        }, {
+                            name: '第二層2',
+                            url: null,
+                            childNodes: [{
+                                name: '第三層2',
+                                url: null,
+                                childNodes: [{
+                                    name: '第四層1',
+                                    url: '到底了'
+                                }]
+                            }]
+                        }],
+                    }
+                }
+            },
+
+
+        })
+
+        app.component('media', {
+            name: 'media',
+            props: {
+                title: String,
+                url: String,
+                child: {
+                    type: Array,
+                    default: []
+                }
+            },
+            data() {
+                return {
+                    isOpen: false
+                }
+            },
+            template: `
+            <ul>
+                <li>
+                    <template v-if="child.length > 0">
+                        <h2 class='has-child' :class="{'is-open':isOpen}" @click='isOpen = !isOpen'>{{ title }}</h2>
+                        <media
+                        v-show='isOpen'
+                        v-for="c in child"
+                        :title='c.name'
+                        :child="c.childNodes"
+                        :url="c.url"
+                        />
+                    </template>    
+                    <a>{{url}}</a>
+                </li>
+            </ul>
+            `
+        })
+
+
+        app.mount('#app');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.47/vue.global.js'
+        integrity='sha512-2zwx0mkoR2cxZY0humPK79YhJYgoX5lT+WNqkgTcV7qhVm3+msjlmOgoXnN1cW2r9qqbZez3XhnLZsyW3k8Wtg=='
+        crossorigin='anonymous'></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.css'
+        integrity='sha512-lp6wLpq/o3UVdgb9txVgXUTsvs0Fj1YfelAbza2Kl/aQHbNnfTYPMLiQRvy3i+3IigMby34mtcvcrh31U50nRw=='
+        crossorigin='anonymous' />
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            list-style: none;
+        }
+
+        .tabs {
+            margin: 10px;
+        }
+
+        .tabs>button {
+            background: none;
+            border: 2px solid transparent;
+            margin-inline: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            transition: border 1s, color .7s;
+        }
+
+        .tabs>button.active {
+            color: #63e2b7;
+            border-bottom: 2px solid #63e2b7;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+    <div id="app" class="container">
+        <div class="tabs">
+            <button @click="active='TheList'" :class="{'active' : active === 'TheList'}">清單</button>
+            <button @click="active='addClass'" :class="{'active' : active === 'addClass'}">新增類別</button>
+        </div>
+        <hr>
+        <section>
+            <the-list v-if="active === 'TheList'"></the-list>
+            <the-add-class v-else-if="active === 'addClass'"></the-add-class>
+        </section>
+    </div>
+
+    <!-- TheList Start -->
+    <script type="text/x-template" id="TheList">
+        <article class='input-group gap-3' style='width:32rem;'>
+            <input v-model='newProduct.name' type="text" class='form-control'>
+            <select v-model="newProduct.Lclass" class='form-select'>
+                <option value="請選擇" hidden>請選擇</option>
+                <option v-for='c in classList' :value="c">{{c}}</option>
+            </select>
+            <button @click='addProduct' class='btn btn-primary'>新增</button>
+        </article>
+        <hr>
+        <div class='tabs'>
+            <button @click='currentClass = "all"' :class="{'active':currentClass ==='all'}">全部</button>
+            <button v-for="c in classList" @click='currentClass = c' :class="{'active':currentClass === c}">{{ c }}</button>
+        </div>
+        <article class='row row-cols-2'>
+            <template v-for='{name,Lclass} in products' :key='name'>
+                <div class="col-3"  v-if='Lclass === currentClass || currentClass === "all"'>
+                    <div class='card p-3 text-center fs-4 m-2'>
+                        {{name}}
+                    </div>
+                </div>
+            </template>
+        </article>
+    </script>
+    <!-- TheList End -->
+
+    <!-- TheAddClass Start -->
+    <script type="text/x-template" id="TheAddClass">
+        <div class='input-group gap-3' style='width:26rem;'>
+            <input v-model='newClass' type="text" class='form-control'>
+            <button @click='addClass' class='btn btn-primary'>新增類別</button>
+        </div>
+        <hr>
+        <ul class='list-group'>
+            <li v-for='c in classList' class='list-group-item'>{{c}}</li>
+        </ul>
+    </script>
+    <!-- TheAddClass End -->
+
+    <script>
+        const { ref } = Vue;
+        // global
+        const classList = ref(['蔬菜', '水果']);
+
+        const vm = Vue.createApp({
+            setup() {
+                const active = ref('TheList');
+                return {
+                    active,
+                }
+            }
+        });
+        vm.component('the-list', {
+            template: "#TheList",
+            setup() {
+                const newProduct = ref({
+                    name: '',
+                    Lclass: '請選擇',
+                });
+                const currentClass = ref('all');
+                const products = ref([
+                    {
+                        name: '青江菜',
+                        Lclass: '蔬菜',
+                    },
+                    {
+                        name: '香蕉',
+                        Lclass: '水果',
+                    },
+                ])
+
+                const addProduct = () => {
+                    products.value.push({
+                        name: newProduct.value.name,
+                        Lclass: newProduct.value.Lclass,
+                    });
+                    newProduct.value.name = '';
+                    newProduct.value.Lclass = '請選擇';
+                }
+
+                return {
+                    newProduct,
+                    currentClass,
+                    products,
+                    classList,
+                    addProduct,
+                }
+            }
+        });
+
+
+        vm.component('the-add-class', {
+            template: '#TheAddClass',
+            setup() {
+                const newClass = ref('電腦設備');
+                const addClass = () => {
+                    classList.value.push(newClass.value);
+                }
+                return {
+                    newClass,
+                    classList,
+                    addClass,
+                }
+            }
+        });
+
+
+        vm.mount('#app');
+    </script>
+
+</body>
+
+</html>

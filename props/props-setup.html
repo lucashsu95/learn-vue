@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.2/vue.global.js'
+        integrity='sha512-KnhQ2qDDo4xtzMglIRUqBBGmUQjt55uMJV1lGsiYrVlh3DfJgrwxVVnJkqtOcFaq45INrDM8SD/BA4qHnRJeEg=='
+        crossorigin='anonymous'></script>
+    <style>
+        .has-child::before {
+            content: '+ ';
+        }
+
+        .is-open::before {
+            content: '- ';
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        {{ datas.childNodes }}
+        <media :title="datas.name" :child="datas.childNodes"></media>
+    </div>
+
+    <script>
+        const { ref, createApp } = Vue;
+        const app = createApp({
+            setup() {
+                const datas = {
+                    name: '第一層',
+                    childNodes: [
+                        {
+                            name: '第二層1',
+                            url: 'https://www.google.com/',
+                            childNodes: [
+                                {
+                                    name: '第三層1',
+                                    url: 'https://okcest.cool/',
+                                },
+                            ],
+                        },
+                        {
+                            name: '第二層2',
+                            url: 'https://www.youtube.com/?gl=TW&hl=zh-tw',
+                            childNodes: [
+                                {
+                                    name: '第三層2',
+                                    url: 'https://ani.gamer.com.tw/mygather.php?u=lucashsu2020',
+                                    childNodes: [
+                                        {
+                                            name: '第四層1',
+                                            url: 'https://translate.google.com/',
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                };
+
+                return {
+                    datas,
+                };
+            }
+        })
+        app.component('media', {
+            props: {
+                title: String,
+                url: String,
+                child: {
+                    type: Array,
+                    default: [],
+                },
+            },
+            setup(props) {
+                const isOpen = ref(false);
+
+                return {
+                    isOpen,
+                };
+            },
+            template: `
+                <ul>
+                    <li>
+                        <h2 class='has-child' :class="{'is-open': isOpen}" @click='isOpen = !isOpen'>{{ title }}</h2>
+                        <a :href='url'>{{ url }}</a>
+                        <hr>
+                        <template v-if="child.length > 0">
+                            <media
+                            v-show='isOpen'
+                            v-for="c in child"
+                            :key="c.name"
+                            :title='c.name'
+                            :child="c.childNodes"
+                            :url="c.url"
+                            />
+                        </template>    
+                    </li>
+                </ul>
+                `,
+        })
+        app.mount("#app")
+    </script>
+
+
+</body>
+
+</html>
