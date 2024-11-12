@@ -1,8 +1,5 @@
 <script setup>
-import { defineProps } from 'vue';
-
 defineProps(['data'])
-
 defineEmits(['editItem', 'delItem']) // 可有可無，如果要在js裡做事情就要打
 
 </script>
