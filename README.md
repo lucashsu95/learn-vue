@@ -5,10 +5,10 @@
 - ### props的使用
   - [**CDN** 寫法](props)
     - 包含兩個檔案(一個**Options**寫法和一個**Composition**寫法)
-  - [**CLI**寫法](props-emit-cli)
+  - [**CLI**寫法](shop-car)
 
 - ### 實作TodoList
-  - [**CDN** 寫法](todList.html)
+  - [**CDN** 寫法](todList-cdn.html)
   - [**CLI** 寫法](todolist-cli)
 
 - ### [`<transition>`](vue-modal-transition.html)

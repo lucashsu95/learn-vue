@@ -1,7 +1,6 @@
 <script setup>
-// npm i bootstrap jquery popper.js
 import { onMounted, ref } from 'vue';
-import TheTodoItem from './components/TheTodoItem.vue';
+import TheTodoItem from '@/components/TheTodoItem.vue';
 import $ from 'jquery';
 
 let id = 0;
